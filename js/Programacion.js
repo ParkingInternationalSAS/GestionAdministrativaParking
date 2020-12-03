@@ -17,13 +17,15 @@
     }      
     
     if(!permiso){
-      alert('no tiene permitido ejecutar esta acción');
+      $('#Modal-2-Message').text('no tiene permitido ejecutar esta acción');
+      $('#modal-2').modal('show');
       return;
     }*/
     
     event.preventDefault(); 
     if(allowCreateOrUpdate){
-      alert('Debe cancelar el elemento seleccionado');
+      $('#Modal-2-Message').text('Debe cancelar el elemento seleccionado');
+      $('#modal-2').modal('show');
       if(isEdit)
       {
         location.href = `#rowId-${firstId}-edit`;
@@ -98,6 +100,27 @@ $(document).on('click', '.btn_save', function(event)
     let estado = $('#estado-' + helper).val();
     let obervaciones = $('#obervaciones-' + helper).val();   
     
+
+    if(cedula === '' || proyecto === `` || fecha === `` ||  horaEntrada === `` || horaSalida === `` || estado === ``)
+    {      
+      $('#Modal-2-Message').text('Todos los campos son obligatorios');
+      $('#modal-2').modal('show');	 
+      return;
+    }
+    
+    if(nombre == ``)
+    {
+      $('#Modal-2-Message').text('Debe ingresar una cedula registrada');
+      $('#modal-2').modal('show');	
+      return;
+    }
+    
+    if(parqueadero === ``)
+    {
+      $('#Modal-2-Message').text('Debe ingresar una parqueadero registrado');
+      $('#modal-2').modal('show');	
+      return;
+    }
 
 
     let myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/insertTurno';
@@ -181,23 +204,7 @@ $(document).on('click', '.btn_save', function(event)
         };
 
 
-        if(cedula === '' || proyecto === `` || fecha === `` ||  horaEntrada === `` || horaSalida === `` || estado === ``)
-        {      
-          alert('Todos los campos son obligatorios');    
-          return;
-        }
         
-        if(nombre == ``)
-        {
-          alert('Debe ingresar una cedula registrada');
-          return;
-        }
-        
-        if(parqueadero === ``)
-        {
-          alert('Debe ingresar una parqueadero registrado');
-          return;
-        }
         helper = '#rowId-' + conteo;
         
         $(helper).remove();
@@ -213,6 +220,7 @@ $(document).on('click', '.btn_save', function(event)
 
     if(isEdit)
     {
+      let usuarioModifica = sessionStorage.getItem('cc'); 
       myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/updateTurno';
       
       parametros = {
@@ -230,26 +238,11 @@ $(document).on('click', '.btn_save', function(event)
         horaEntrada,
         horaSalida,
         estado,
-        obervaciones
+        obervaciones,
+        usuarioModifica
         };
 
-        if(cedula === '' || proyecto === `` || fecha === `` ||  horaEntrada === `` || horaSalida === `` || estado === ``)
-        {      
-          alert('Todos los campos son obligatorios');    
-          return;
-        }
         
-        if(nombre == ``)
-        {
-          alert('Debe ingresar una cedula registrada');
-          return;
-        }
-        
-        if(parqueadero === ``)
-        {
-          alert('Debe ingresar una parqueadero registrado');
-          return;
-        }
         
         helper = `#rowId-${firstId}-edit`;
         
@@ -286,11 +279,13 @@ function SendObject(myurl,parametros)
           
            },
            500: function(responseObject, textStatus, errorThrown) {
-             alert( 'Error guardando las respuestas!!' );
+             $('#Modal-2-Message').text('Error guardando los campos!!');
+             $('#modal-2').modal('show');	
            } 
          },
          404: function(responseObject, textStatus, errorThrown) {
-           alert( 'No se pudo guradar las respuestas intentelo mas tarde!!' );
+           $('#Modal-2-Message').text('No se pudo ejecutar, intentelo mas tarde!!');
+           $('#modal-2').modal('show');	
          }  
          }).done( function() {
 
@@ -465,7 +460,8 @@ $(function(){
          }      
          
          if(!permiso){
-           alert('no tiene permitido ejecutar esta acción');
+           $('#Modal-2-Message').text('no tiene permitido ejecutar esta acción');
+           $('#modal-2').modal('show');
            return;
          }*/
 
@@ -485,7 +481,8 @@ $(function(){
     { 
       if(allowCreateOrUpdate)
       {
-        alert('Debe cancelar el elemento seleccionado');
+        $('#Modal-2-Message').text('Debe cancelar el elemento seleccionado');
+        $('#modal-2').modal('show');	
         if(isEdit)
         {
           location.href = `#rowId-${firstId}-edit`;
@@ -1018,14 +1015,17 @@ function verifyPermissionsConsult(modulo, actividad){
         });            
       },
       500: function(responseObject, textStatus, errorThrown) {
-        alert( 'Error guardando las respuestas!!' );
+         $('#Modal-2-Message').text('Error haciendo la consulta!!');
+         $('#modal-2').modal('show');	
       },
       202: function(responseObject, textStatus, errorThrown) {
-        alert(responseObject.mensaje);
+        $('#Modal-2-Message').text(responseObject.mensaje);
+        $('#modal-2').modal('show');	
       }
     },
     404: function(responseObject, textStatus, errorThrown) {
-      alert( 'No se pudo guradar las respuestas intentelo mas tarde!!' );
+      $('#Modal-2-Message').text('No se pudo consultar, intentelo mas tarde!!');
+      $('#modal-2').modal('show');
     }  
     }).done( function() {
 
