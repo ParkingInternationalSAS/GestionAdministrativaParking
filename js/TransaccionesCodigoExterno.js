@@ -81,11 +81,11 @@ $(":input").bind("keyup change", function(e) {
 $(function(){
   $(".cargar").click(function(){  
 
-         var permiso= false;
-         var permissions = new Array();
+         let permiso= false;
+         let permissions = new Array();
          permissions = JSON.parse(sessionStorage.getItem('permissions'));
 
-         for(var i = 0; i < permissions.length; i++){
+         for(let i = 0; i < permissions.length; i++){
            permiso = verifyPermissions(permissions[i].modulo, permissions[i].actividad);
            if(permiso == true){
              break;
@@ -93,7 +93,8 @@ $(function(){
          }      
          
          if(!permiso){
-           alert('no tiene permitido ejecutar esta acción');
+           $('#Modal-2-Message').text('no tiene permitido ejecutar esta acción');
+           $('#modal-2').modal('show');
            return;
          }
         
@@ -103,11 +104,11 @@ $(function(){
         myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/transaccionStickers';
         //myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/transaccionStickers';
 
-        var fechaInicial = $('#datetimePickerFrom').val();
-        var fechaFinal = $('#datetimePickerUntil').val();
-        var park = $('#Park').val();
-        var idStickerStart = $('#idStickerStart').val();
-        var idStickerEnd = $('#idStickerEnd').val();
+        let fechaInicial = $('#datetimePickerFrom').val();
+        let fechaFinal = $('#datetimePickerUntil').val();
+        let park = $('#Park').val();
+        let idStickerStart = $('#idStickerStart').val();
+        let idStickerEnd = $('#idStickerEnd').val();
         
         if(fechaInicial === ''){
           $('#datetimePickerFrom').addClass("is-invalid");
@@ -138,7 +139,7 @@ $(function(){
         };
 
         console.log(JSON.stringify(parametros, null, 2));
-        var screen = $('.loader-container');
+        let screen = $('.loader-container');
         Loader(screen);
         
         jQuery.ajax ({
@@ -149,8 +150,7 @@ $(function(){
         contentType: "application/json",
         statusCode: {
           200: function(responseObject, textStatus, jqXHR) {
-            alert(responseObject.data.length);
-            var helper ='';
+            let helper ='';
             $.each(responseObject.data,function(i, item){
               
               helper += '<tr>' +
@@ -182,14 +182,17 @@ $(function(){
             });
           },
           500: function(responseObject, textStatus, errorThrown) {
-            alert( 'Error guardando las respuestas!!' );
+            $('#Modal-2-Message').text('Error haciendo la consulta!!');
+            $('#modal-2').modal('show');	
           },
           202: function(responseObject, textStatus, errorThrown) {
-            alert(responseObject.mensaje);
+           $('#Modal-2-Message').text(responseObject.mensaje);
+           $('#modal-2').modal('show');	
           }
         },
-        404: function(responseObject, textStatus, errorThrown) {
-          alert( 'No se pudo guradar las respuestas intentelo mas tarde!!' );
+        404: function(responseObject, textStatus, errorThrown) {         
+          $('#Modal-2-Message').text('No se pudo generar la cosnulta intentelo mas tarde!');
+          $('#modal-2').modal('show');	
         }  
         }).done( function() {
 
