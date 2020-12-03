@@ -3,7 +3,8 @@ select {
   height: 30px !important;
 }
 
-.cargar {
+.cargar,
+.modal-header {
   background-color: #90d400 !important;
 }
 
