@@ -61,8 +61,6 @@ $(":input").bind("keyup change", function(e) {
        });
   });
 
-
-
   $(function(){
    $(".cargar").click(function(){  
          /*var permiso= false;
@@ -77,7 +75,8 @@ $(":input").bind("keyup change", function(e) {
          }      
          
          if(!permiso){
-           alert('no tiene permitido ejecutar esta acción');
+           $('#Modal-2-Message').text('no tiene permitido ejecutar esta acción');
+           $('#modal-2').modal('show');	
            return;
          }*/
          
@@ -92,8 +91,6 @@ $(":input").bind("keyup change", function(e) {
          let cedula = $(`#cc`).val();
          let nombrePark = $(`#park`).val();
          let fecha = $('#datetimePickerDate').val();
-
-
 
          if(cedula === ''){
            cedula = null;
@@ -202,11 +199,13 @@ $(":input").bind("keyup change", function(e) {
             }
            },
            500: function(responseObject, textStatus, errorThrown) {
-             alert( 'Error guardando las respuestas!!' );
+             $('#Modal-2-Message').text('Error haciendo la consulta!!');
+             $('#modal-2').modal('show');	
            } 
          },
          404: function(responseObject, textStatus, errorThrown) {
-           alert( 'No se pudo guradar las respuestas intentelo mas tarde!!' );
+           $('#Modal-2-Message').text('No se pudo generar la cosnulta intentelo mas tarde!');
+           $('#modal-2').modal('show');	
          }  
          }).done( function() {
 
