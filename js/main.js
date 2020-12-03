@@ -16,8 +16,6 @@ function insertarData() {
     contentType: "application/json",
     statusCode: {
       200: function(responseObject, textStatus, jqXHR) {
-
-
         sessionStorage.clear();
         var permision = new Array();
 
@@ -28,15 +26,18 @@ function insertarData() {
         };
         }      
 
+        sessionStorage.setItem('cc', login);
         sessionStorage.setItem('user', responseObject.data.nombre);
         sessionStorage.setItem('permissions', JSON.stringify(permision));
         window.location = "index.html";   
       },
       500: function(responseObject, textStatus, errorThrown) {
-        alert( 'Error logueando al usuario!!' );       
+        $('#Modal-2-Message').text('Error logueando al usuario!!');
+        $('#modal-2').modal('show');	      
     },
-    202: function(responseObject, textStatus, errorThrown) {      
-      alert( 'Usuario o password incorrecto' );
+    202: function(responseObject, textStatus, errorThrown) {
+      $('#Modal-2-Message').text('Usuario o password incorrecto');
+      $('#modal-2').modal('show');	      
     } 
   }
 }) .done( function() { 
