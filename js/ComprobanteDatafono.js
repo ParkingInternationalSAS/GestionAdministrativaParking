@@ -4,7 +4,8 @@
 	$(document).on('click', '.btn_edit', function(event) 
 	{
     if(editAmount != null){
-      alert('Debe cancelar el elemento seleccionado');
+      $('#Modal-2-Message').text('Debe cancelar el elemento seleccionado');
+      $('#modal-2').modal('show');
       return;
     }
     //Verificacion de permiso para edtar
@@ -20,7 +21,8 @@
     }      
     
     if(!permiso){
-      alert('no tiene permitido ejecutar esta acción');
+      $('#Modal-2-Message').text('no tiene permitido ejecutar esta acción');
+      $('#modal-2').modal('show');
       return;
     }
     
@@ -68,7 +70,8 @@ $(document).on('click', '.btn_save, #modalSave', function(event)
     var factura = $(helper).text();
 
     if(firstValue === NewValue){
-      alert('Valores iguales');
+      $('#Modal-2-Message').text('Valores iguales');
+      $('#modal-2').modal('show');
       return;
     }
 
@@ -106,22 +109,24 @@ $(document).on('click', '.btn_save, #modalSave', function(event)
          contentType: "application/json",
          statusCode: {
            200: function(responseObject, textStatus, jqXHR) {
-
-               console.log(responseObject.mensaje);            
+               $('#Modal-2-Message').text(responseObject.mensaje);
+               $('#modal-2').modal('show');	
            },
            500: function(responseObject, textStatus, errorThrown) {
-             alert( 'Error guardando las respuestas!!' );
+             $('#Modal-2-Message').text('Error guardando las respuestas!!');
+             $('#modal-2').modal('show');	
            } 
          },
          404: function(responseObject, textStatus, errorThrown) {
-           alert( 'No se pudo guradar las respuestas intentelo mas tarde!!' );
+           $('#Modal-2-Message').text('No se pudo ejecutar, intentelo mas tarde!!');
+           $('#modal-2').modal('show');	
          }  
          }).done( function() {
 
          }).fail( function() {           
          });
 
-         $('#modal1').modal('hide');	 
+         $('#modal-1').modal('hide');	 
          
          editAmount = null;
 	});
@@ -130,7 +135,8 @@ $(document).on('click', '.btn_save, #modalSave', function(event)
 
 $(document).on('focusout', '.row_data', function(event) 
 	{
-    $('#modal1').modal('show');	
+    $('#Modal-1-Message').text('Desea guardar los cambios ?');
+    $('#modal-1').modal('show');	
   });
 
 
@@ -250,7 +256,8 @@ $(function(){
          }      
          
          if(!permiso){
-           alert('no tiene permitido ejecutar esta acción');
+           $('#Modal-2-Message').text('no tiene permitido ejecutar esta acción');
+           $('#modal-2').modal('show');	 
            return;
          }
 
@@ -303,7 +310,6 @@ $(function(){
         contentType: "application/json",
         statusCode: {
           200: function(responseObject, textStatus, jqXHR) {
-            //alert(responseObject.data.length);
             var helper =''; var conteo = 0;
             $.each(responseObject.data,function(i, item){
               
@@ -340,19 +346,21 @@ $(function(){
             });
           },
           500: function(responseObject, textStatus, errorThrown) {
-            alert( 'Error guardando las respuestas!!' );
+            $('#Modal-2-Message').text('Error guardando las respuestas!!');
+            $('#modal-2').modal('show');	
           },
           202: function(responseObject, textStatus, errorThrown) {
-            alert(responseObject.mensaje);
+            $('#Modal-2-Message').text(responseObject.mensaje);
+            $('#modal-2').modal('show');	
           }
         },
         404: function(responseObject, textStatus, errorThrown) {
-          alert( 'No se pudo guradar las respuestas intentelo mas tarde!!' );
+          $('#Modal-2-Message').text('No se pudo consultar intentelo mas tarde!!');
+          $('#modal-2').modal('show');
         }  
         }).done( function() {
 
-        }).fail( function() {
-        console.log(JSON.stringify(parametros))            
+        }).fail( function() {          
         });
     })   
 });
