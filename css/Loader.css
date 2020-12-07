@@ -62,15 +62,15 @@ select {
 }
 
 .large-row-zone {
-  width: 200px !important;
+  min-width: 200px !important;
 }
 
 .large-row-cc {
-  width: 160px !important;
+  min-width: 160px !important;
 }
 
 .large-row-obs {
-  width: 200px !important;
+  min-width: 200px !important;
 }
 
 .new-row {
