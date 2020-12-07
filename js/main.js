@@ -33,9 +33,11 @@ function insertarData() {
       },
       500: function(responseObject, textStatus, errorThrown) {
         $('#Modal-2-Message').text('Error logueando al usuario!!');
-        $('#modal-2').modal('show');	      
+        $('#modal-2').modal('show');		      
     },
     202: function(responseObject, textStatus, errorThrown) {
+      $().val
+      
       $('#Modal-2-Message').text('Usuario o password incorrecto');
       $('#modal-2').modal('show');	      
     } 
@@ -46,6 +48,7 @@ function insertarData() {
   console.log(JSON.stringify(objetoLogin))
 });
 }
+
 
   $(document).ready(function(){
     sessionStorage.clear();
