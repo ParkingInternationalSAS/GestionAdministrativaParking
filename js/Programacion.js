@@ -1005,7 +1005,7 @@ function verifyPermissionsConsult(modulo, actividad){
                  title: 'Programacion Nomina Operativa' 
               }                      
              ],
-             "lengthMenu": [ 55, 10, 25, 50, 75, 100 ],
+             "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
              "language": spanish,
              "order": [[4,'asc'],[7,'asc']]
         });   
