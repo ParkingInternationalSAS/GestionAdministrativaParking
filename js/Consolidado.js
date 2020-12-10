@@ -163,7 +163,7 @@ $(function(){
                 switch(item.inconsistencias)
                 {
                     case 0:
-                        item.inconsistencias = `CUADRARO`
+                        item.inconsistencias = `CUADRADO`
                         break;
                     case 1:
                         item.inconsistencias = `DESCUADRADO`
