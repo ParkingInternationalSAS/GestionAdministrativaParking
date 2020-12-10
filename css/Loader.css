@@ -91,3 +91,9 @@ select {
 #datatableIndex_wrapper div {
   margin-right: 20px !important;
 }
+
+
+.imageLog {
+  max-width: 70px !important;
+  max-height: 42px !important;
+}
