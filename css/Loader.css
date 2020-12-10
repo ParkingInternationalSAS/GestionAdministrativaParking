@@ -97,3 +97,8 @@ select {
   max-width: 70px !important;
   max-height: 42px !important;
 }
+
+
+.title-modal {
+  text-align: center !important;
+}
