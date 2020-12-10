@@ -123,6 +123,7 @@ $(function(){
              var helper ='';
              $.each(responseObject.data,function(i, item){
               
+                console.log(item);
                 switch (item.estado) 
                 {
                     case 1:
@@ -163,9 +164,32 @@ $(function(){
                 {
                     case 0:
                         item.inconsistencias = `CUADRARO`
+                        break;
                     case 1:
                         item.inconsistencias = `DESCUADRADO`
+                        break;
                 }
+
+                switch(item.cumpleHoraEntrada)
+                {
+                    case 0:
+                        item.cumpleHoraEntrada = `NO`
+                        break;
+                    case 1:
+                        item.cumpleHoraEntrada = `SI`
+                        break;
+                }
+
+                switch(item.cumpleHoraSalida)
+                {
+                    case 0:
+                        item.cumpleHoraSalida = 'NO'
+                        break;
+                    case 1:
+                        item.cumpleHoraSalida = `SI`
+                        break;
+                }
+
                helper += '<tr>' +
                            '<td>' + item.zona + '</td>'+
                            '<td>' + item.cedula + '</td>'+
@@ -182,6 +206,8 @@ $(function(){
                            '<td>' + item.estado + '</td>'+
                            '<td>' + item.horasTrabajadas + '</td>'+
                            '<td>' + item.horasProgramadas + '</td>'+
+                           '<td>' + item.cumpleHoraEntrada + '</td>'+
+                           '<td>' + item.cumpleHoraSalida + '</td>'+
                            '<td>' + item.inconsistencias + '</td>'+
                          '</tr>';     
              });
