@@ -1,3 +1,9 @@
+:root {
+  --color-parking-claro: #94d900;
+  --color-parking-orcuro: #cfd1cb;
+  --color-blue-parking: #5db2be;
+}
+
 input,
 select {
   height: 30px !important;
