@@ -106,7 +106,7 @@ select {
 .modal-button {
   background: linear-gradient(
     0deg,
-    var(--color-parking-claro) 0%,
-    var(--color-parking-orcuro) 100%
+    var(--color-parking-claro) 10%,
+    var(--color-parking-orcuro) 90%
   ) !important;
 }
