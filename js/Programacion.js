@@ -1,3 +1,10 @@
+  var myurlSave = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/insertTurno';  
+  var urlGetSupervisorName = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getNombreSupervisor/';
+  var myurlEdit = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/updateTurno';
+  var myurlNombre = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getNombre/';
+  var myurlPark = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getNombrePark/';
+  var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+  var myurlConsult = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getProgramacion';
   //Variables globales
   var firstId = null, allowCreateOrUpdate = false, conteo = 1, isEdit = false, cedula, nombrePark, optionsHtmlPark = '', isConsult = false;
 
@@ -124,7 +131,7 @@ $(document).on('click', '.btn_save', function(event)
     }
 
 
-    let myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/insertTurno';
+    
 
     let DateDay = null, parametros = null;
 
@@ -161,7 +168,7 @@ $(document).on('click', '.btn_save', function(event)
 
       let cedulaSupervisor = usuarioModifica;
       let nombreSupervisor;
-      let urlGetSupervisorName = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getNombreSupervisor/' + cedulaSupervisor;
+      urlGetSupervisorName = urlGetSupervisorName + cedulaSupervisor;
 
       $.ajax({
         type:'get',
@@ -220,7 +227,7 @@ $(document).on('click', '.btn_save', function(event)
               helper = '#rowId-' + conteo;
               
               $(helper).remove();
-              SendObject(myurl, parametros);
+              SendObject(myurlSave, parametros);
             }
             $('.untilDate').hide();
             $('#modify-Date').text('Fecha');
@@ -236,9 +243,7 @@ $(document).on('click', '.btn_save', function(event)
     
 
     if(isEdit)
-    {      
-      myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/updateTurno';
-      
+    {           
       parametros = {
         id,
         zona,
@@ -257,15 +262,13 @@ $(document).on('click', '.btn_save', function(event)
         obervaciones,
         usuarioModifica
         };
-
-        
         
         helper = `#rowId-${firstId}-edit`;
         
         $(helper).remove();  
 
         isEdit = false;
-        SendObject(myurl, parametros);
+        SendObject(myurlEdit, parametros);
     }
          
     if(isConsult)
@@ -322,10 +325,10 @@ $(document).on('focusout', '.row_data_cc', function(event)
 
         if(cc != '')
         {
-          let myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getNombre/' + cc;
+          myurlNombre = myurlNombre + cc;
           $.ajax({
               type: 'get',
-              url: myurl,
+              url: myurlNombre,
               statusCode: 
               {
                 200: function(response) {
@@ -353,7 +356,6 @@ $(document).on('focusout', '.row_data_cc', function(event)
                   return;
                 }
               }
-
           });
         }   
   });
@@ -369,10 +371,11 @@ $(document).on('focusout', '.row_data_cc', function(event)
         let idPark = $(helper).val();
         if(idPark != '')
         {
-          let myurl1 = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getNombrePark/' + idPark;
+          myurlPark = myurlPark + idPark;
+          console.log();
           $.ajax({
             type: 'get',
-            url: myurl1,
+            url: myurlPark,
             statusCode: 
             {
               200:function(response)
@@ -432,8 +435,6 @@ function Loader(screen){
     $('.loader-container').hide();   
   
     var parks;
-    var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
-
     
     $.when(     
         $.getJSON(urlPark, function(data) {
@@ -931,7 +932,7 @@ function verifyPermissionsConsult(modulo, actividad){
     var table = $('#datatableIndex').DataTable();
     table.clear().draw();
     table.destroy();    
-    let myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getProgramacion';
+    
 
     if(nombrePark === ''){
       nombrePark = null;
@@ -948,7 +949,7 @@ function verifyPermissionsConsult(modulo, actividad){
     console.log(JSON.stringify(parametros, null, 2));
         
     jQuery.ajax ({
-    url: myurl,
+    url: myurlConsult,
     type: "POST",
     data: JSON.stringify(parametros, null , 2),
     dataType: "json",
