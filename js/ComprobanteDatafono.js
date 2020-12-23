@@ -1,3 +1,8 @@
+  var myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/editarComprobanteDatafono';
+  var urlZone = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/zonas';
+  var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+  var myurlv = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/validacionVaucher';
+  
   //Variables globales
   var firstValue = null, firstId = null, editAmount = null;
 
@@ -85,7 +90,7 @@ $(document).on('click', '.btn_save, #modalSave', function(event)
 
     
 
-    var myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/editarComprobanteDatafono';
+    
 
     var parametros = {
              numAprobacionAntiguo,
@@ -200,8 +205,7 @@ $(":input").bind("keyup change", function(e) {
    });
   
    var zones, parks, incomeTypes;
-       var urlZone = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/zonas';
-       var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+       
 
        var optionsHtmlZone = '';
        var optionsHtmlPark = '';
@@ -265,7 +269,7 @@ $(function(){
         var table = $('#datatableIndex').DataTable();
         table.clear().draw();
         table.destroy();    
-        myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/validacionVaucher';
+        
 
         var fechaInicial = $('#datetimePickerFrom').val();
         var fechaFinal = $('#datetimePickerUntil').val();
@@ -309,7 +313,7 @@ $(function(){
         Loader(screen);
         
         jQuery.ajax ({
-        url: myurl,
+        url: myurlv,
         type: "POST",
         data: JSON.stringify(parametros, null , 2),
         dataType: "json",
