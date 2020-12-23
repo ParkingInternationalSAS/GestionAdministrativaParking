@@ -98,7 +98,8 @@ $(document).on('click', '.btn_save', function(event)
     let horaEntrada = $('#horaEntrada-' + helper).val();
     let horaSalida = $('#horaSalida-' + helper).val();
     let estado = $('#estado-' + helper).val();
-    let obervaciones = $('#obervaciones-' + helper).val();   
+    let obervaciones = $('#obervaciones-' + helper).val(); 
+    let usuarioModifica = sessionStorage.getItem('cc');   
     
 
     if(cedula === '' || proyecto === `` || fecha === `` ||  horaEntrada === `` || horaSalida === `` || estado === ``)
@@ -147,7 +148,6 @@ $(document).on('click', '.btn_save', function(event)
         location.href = `#fechaInicio-${helper}`;
         return;
       }
-      let myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/insertTurno';
       let month, day;
 
       let weekday=new Array(7);
@@ -159,68 +159,84 @@ $(document).on('click', '.btn_save', function(event)
                   weekday[5]="Viernes";
                   weekday[6]="Sabado";
 
+      let cedulaSupervisor = usuarioModifica;
+      let nombreSupervisor;
+      let urlGetSupervisorName = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getNombreSupervisor/' + cedulaSupervisor;
 
-      for(let d = 0; d < totalDays; d++)
-      {
-        //Obtner el dia de la semana
-        DateDay = fechaInicial.getUTCDay();
-        dia = weekday[DateDay];
-        fechaInicial.setDate(fechaInicial.getDate() + 1);
-        month = AddZero((fechaInicial.getMonth() + 1).toString());
-        day = AddZero(fechaInicial.getDate().toString());      
+      $.ajax({
+        type:'get',
+        url: urlGetSupervisorName,
+        statusCode:
+        {
+          200: function(response)
+          {             
+            nombreSupervisor = response.data.nombre;
+            for(let d = 0; d < totalDays; d++)
+            {
+              //Obtner el dia de la semana
+              DateDay = fechaInicial.getUTCDay();
+              dia = weekday[DateDay];
+              fechaInicial.setDate(fechaInicial.getDate() + 1);
+              month = AddZero((fechaInicial.getMonth() + 1).toString());
+              day = AddZero(fechaInicial.getDate().toString());      
 
-        //Fecha a enviar
-        fecha = `${fechaInicial.getFullYear()}-${month}-${day}`;
-        console.log(fecha);
+              //Fecha a enviar
+              fecha = `${fechaInicial.getFullYear()}-${month}-${day}`;
+              console.log(fecha);
 
-        //Definir la fecha
-        if(fechaInicial.getDate() > 0 && fechaInicial.getDate() < 8){
-          semana = '1'
-        }else if(fechaInicial.getDate() > 7 && fechaInicial.getDate() < 16){
-          semana = '2'
+              //Definir la fecha
+              if(fechaInicial.getDate() > 0 && fechaInicial.getDate() < 8){
+                semana = '1'
+              }else if(fechaInicial.getDate() > 7 && fechaInicial.getDate() < 16){
+                semana = '2'
+              }
+              else if(fechaInicial.getDate() > 15 && fechaInicial.getDate() < 23){
+                semana = '3'
+              }else if(fechaInicial.getDate() > 22 && fechaInicial.getDate() < 31){
+                semana = '4'
+              }
+
+
+              parametros = {
+                  zona,
+                  cedula,
+                  nombre,
+                  cargo,
+                  proyecto,
+                  parqueadero,
+                  centroCostos,
+                  fecha,
+                  dia,
+                  semana,
+                  horaEntrada,
+                  horaSalida,
+                  estado,
+                  obervaciones,
+                  cedulaSupervisor,
+                  nombreSupervisor
+              };    
+              
+              console.log(JSON.stringify(parametros, null, 2));   
+              helper = '#rowId-' + conteo;
+              
+              $(helper).remove();
+              SendObject(myurl, parametros);
+            }
+            $('.untilDate').hide();
+            $('#modify-Date').text('Fecha');
+          },
+          500: function()
+          {
+            $('#Modal-2-Message').text('Error al recuperar el supervisor');
+            $('#modal-2').modal('show');	
+          }
         }
-        else if(fechaInicial.getDate() > 15 && fechaInicial.getDate() < 23){
-          semana = '3'
-        }else if(fechaInicial.getDate() > 22 && fechaInicial.getDate() < 31){
-          semana = '4'
-        }
-
-
-        parametros = {
-            zona,
-            cedula,
-            nombre,
-            cargo,
-            proyecto,
-            parqueadero,
-            centroCostos,
-            fecha,
-            dia,
-            semana,
-            horaEntrada,
-            horaSalida,
-            estado,
-            obervaciones
-        };
-
-
-        
-        helper = '#rowId-' + conteo;
-        
-        $(helper).remove();
-
-
-        SendObject(myurl, parametros);
-
-      }
-      $('.untilDate').hide();
-      $('#modify-Date').text('Fecha');
+      })
     }
     
 
     if(isEdit)
-    {
-      let usuarioModifica = sessionStorage.getItem('cc'); 
+    {      
       myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/updateTurno';
       
       parametros = {
@@ -265,9 +281,8 @@ $(document).on('click', '.btn_save', function(event)
 function SendObject(myurl,parametros)
 {
 
-  console.log(JSON.stringify(parametros, null, 2));   
-  console.log(myurl); 
   
+  console.log(myurl); 
   jQuery.ajax ({
          url: myurl,
          type: "POST",
@@ -308,7 +323,6 @@ $(document).on('focusout', '.row_data_cc', function(event)
         if(cc != '')
         {
           let myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getNombre/' + cc;
-          console.log(myurl);
           $.ajax({
               type: 'get',
               url: myurl,
@@ -658,7 +672,13 @@ function AllowUpdateRow(id, btnClass, iconClass)
             (
                 $('<select>').attr('type', 'text').attr('id','estado-' + id).attr('autocomplete','off').addClass('form-control state')
             )
-        )
+        ).append
+        (
+            $('<td>')
+        ).append
+        (
+            $('<td>')
+        )        
         .append
         (
             $('<td>')
@@ -778,7 +798,13 @@ function AllowUpdateRow(id, btnClass, iconClass)
             (
                 $('<select>').attr('type', 'text').attr('id','estado-' + id).attr('autocomplete','off').addClass('form-control state')
             )
-        )
+        ).append
+        (
+            $('<td>')
+        ).append
+        (
+            $('<td>')
+        )   
         .append
         (
             $('<td>')
@@ -982,7 +1008,9 @@ function verifyPermissionsConsult(modulo, actividad){
                       <td id="horaEntrada-${item.id}">${item.horaEntrada}</td>
                       <td id="horaSalida-${item.id}">${item.horaSalida}</td>
                       <td id="estado-${item.id}">${item.estado}</td>
-                      <td id="observaciones-${item.id}">${item.observaciones}</td>
+                      <td>${item.cedulaSupervisor}</td>
+                      <td>${item.nombreSupervisor}</td>
+                      <td id="observaciones-${item.id}">${item.observaciones}</td>                      
                       <td><button type="button" class="btn_edit btn btn-success btn-sm" row_id="${item.id}"><i class="fas fa-edit"></i></button></td>
                       </tr>`;  
                     
