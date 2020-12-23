@@ -1,3 +1,11 @@
+var urlZone = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/zonas';
+var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+var urlIncomeType = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/tipoIngreso';
+
+var myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/detalleFacturacion';
+  //myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/detalleFacturacion';
+
+
 function Loader(screen){
     $(document)
         .ajaxStart(function (){ 
@@ -42,9 +50,7 @@ function Loader(screen){
 
        $('.loader-container').hide();
        let zones, parks, incomeTypes;
-       let urlZone = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/zonas';
-       let urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
-       let urlIncomeType = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/tipoIngreso';
+       
 
        let optionsHtmlZone = '';
        let optionsHtmlPark = '';
@@ -139,8 +145,7 @@ function AddZero(num){
          var table = $('#datatableIndex').DataTable();
          table.clear().draw();
          table.destroy();    
-         myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/detalleFacturacion';
-         //myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/detalleFacturacion';
+         
 
 
          let date = $('#datetimePickerFrom').val();
