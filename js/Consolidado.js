@@ -1,3 +1,7 @@
+ var urlZone = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getZonas';
+ var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+ var myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getConsolidado';
+ 
  $(document).ready(function(){
     $('body').removeAttr('hidden');
     $('#actualUserL').append(sessionStorage.getItem('user'));
@@ -16,8 +20,7 @@
    });
   
        let zones, parks;
-       let urlZone = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getZonas';
-       let urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+       
 
        let optionsHtmlZone = '';
        let optionsHtmlPark = '';
@@ -76,7 +79,7 @@ $(function(){
          var table = $('#datatableIndex').DataTable();
          table.clear().draw();
          table.destroy();    
-         let myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getConsolidado';
+         
          //myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/detalleFacturacion';
 
          let cedula = $(`#cc`).val();
