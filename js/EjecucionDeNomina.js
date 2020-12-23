@@ -176,6 +176,7 @@ $(":input").bind("keyup change", function(e) {
                            '<td>' + item.fechaFinal + '</td>'+
                            '<td>' + item.tiempoSegundos + '</td>'+
                            '<td>' + item.tiempoHoras + '</td>'+
+                           '<td>' + item.horasMinutos + '</td>'+
                            '<td>' + item.estado + '</td>'
                          '</tr>';     
              });
