@@ -102,3 +102,11 @@ select {
 .title-modal {
   text-align: center !important;
 }
+
+.modal-button {
+  background: linear-gradient(
+    0deg,
+    var(--color-parking-claro) 0%,
+    var(--color-parking-orcuro) 100%
+  ) !important;
+}
