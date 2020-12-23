@@ -1,3 +1,8 @@
+var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+var myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getDetalleEjecucion';
+  //myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/detalleFacturacion';
+
+
 $(":input").bind("keyup change", function(e) {
    var fechaInicial = $('#datetimePickerFrom').val();
    var fechaFinal = $('#datetimePickerUntil').val();
@@ -32,7 +37,7 @@ $(":input").bind("keyup change", function(e) {
 
        $('.loader-container').hide();
        let parks;
-       let urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+       
 
        let optionsHtmlPark = '';
        $.when(  
@@ -83,8 +88,7 @@ $(":input").bind("keyup change", function(e) {
          var table = $('#datatableIndex').DataTable();
          table.clear().draw();
          table.destroy();    
-         let myurl = 'https://190.61.31.221:8443/nominaOperativa/rest/programacion/getDetalleEjecucion';
-         //myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/detalleFacturacion';
+        
 
 
          
