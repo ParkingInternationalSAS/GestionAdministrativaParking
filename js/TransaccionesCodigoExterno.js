@@ -1,3 +1,7 @@
+var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+var myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/transaccionStickers';
+        //myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/transaccionStickers';
+
 function Loader(screen){
   $(document)
       .ajaxStart(function (){ 
@@ -57,7 +61,7 @@ $(":input").bind("keyup change", function(e) {
      yearEnd: 2050
    });
 
-   var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
+   
 
    $.when(       
     $.getJSON(urlPark, function(data) {
@@ -101,8 +105,7 @@ $(function(){
         var table = $('#datatableIndex').DataTable();
         table.clear().draw();
         table.destroy();    
-        myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/transaccionStickers';
-        //myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/transaccionStickers';
+    
 
         let fechaInicial = $('#datetimePickerFrom').val();
         let fechaFinal = $('#datetimePickerUntil').val();
