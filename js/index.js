@@ -2,8 +2,8 @@ var urlZone = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/zonas';
 var urlPark = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/parqueaderos';
 var urlIncomeType = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/tipoIngreso';
 
-//var myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/detalleFacturacion';
-var myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/detalleFacturacion';
+var myurl = 'https://190.61.31.221:8443/planillaDigital/rest/usuario/detalleFacturacion';
+//var myurl = 'http://190.61.31.233:9081/planillaDigital/rest/usuario/detalleFacturacion';
 
 
 function Loader(screen){
